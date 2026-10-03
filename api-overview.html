@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Serene Nirvana Bot — API client overview</title><meta name="description" content="How the Serene Nirvana Bot uses YouTube API Services.">
+<link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css">
+
+</head><body>
+<header><div class="wrap"><a class="brand" href="index.html"><img src="logo.png" alt="">serene nirvana</a>
+<nav><a href="index.html">Home</a><a href="support.html">Support</a><a href="https://www.youtube.com/@serene_nirvana">YouTube</a></nav></div></header>
+
+<main class="wrap doc"><h1>Serene Nirvana Bot — API client overview</h1>
+<p class="muted">Private uploader for the YouTube channel @serene_nirvana.</p>
+<h3>What it is</h3><p>A private desktop tool that runs only on the channel owner's own PC. It produces original relaxation videos
+(calm animated scenes with ambient soundscapes and music for sleep, study and focus) and publishes them to the owner's own channel.
+It has exactly one user, the channel owner, and is not offered to anyone else.</p>
+<h3>How it uses YouTube API Services</h3><ul>
+<li><b>Upload &amp; schedule:</b> videos.insert (private with publishAt; containsSyntheticMedia = true), thumbnails.set</li>
+<li><b>Organise the channel:</b> playlists.list, playlists.insert, playlistItems.insert</li>
+<li><b>Avoid double-booking:</b> channels.list (mine), playlistItems.list (own uploads), videos.list (status)</li>
+<li><b>Learn what viewers like:</b> YouTube Analytics reports.query on the owner's channel (views, minutes watched)</li>
+<li><b>Scopes:</b> youtube.upload, youtube, yt-analytics.readonly · <b>Volume:</b> about 3 videos + 3 Shorts per week</li></ul>
+<h3>Data handling</h3><p>The sign-in token is stored only on the owner's PC; the tool keeps only IDs of videos and playlists it created on the
+owner's channel; analytics are used at fetch time and raw analytics are not stored. No API data is sold, shared, used for advertising
+or used to train AI models. See the <a href="privacy.html">privacy policy</a> and <a href="terms.html">terms</a>.</p>
+<h3>Content</h3><p>Scenes and music are created with AI tools; every upload is disclosed as altered or synthetic content.</p></main>
+<footer><div class="wrap"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms</a><a href="support.html">Support</a>
+<p>© 2026 Serene Nirvana. Made for calm, focus and sleep.</p></div></footer>
+</body></html>
