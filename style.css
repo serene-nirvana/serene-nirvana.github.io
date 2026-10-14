@@ -29,3 +29,9 @@ h3{font-weight:500;font-size:19px;margin:28px 0 6px}
 footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--sub);font-size:14px}
 footer a{color:var(--sub);margin-right:18px}
 .doc h1{font-weight:500;font-size:40px;margin:40px 0 4px}.doc p,.doc li{color:#D9D7E6}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:20px}
+.vcard{display:block;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--moon)}
+.vcard img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.vcard span{display:block;padding:10px 14px 2px;font-size:15px;line-height:1.4}
+.vcard small{display:block;padding:0 14px 12px;color:var(--sub);font-size:13px}
+.vcard:hover{border-color:var(--sub);color:var(--moon)}
