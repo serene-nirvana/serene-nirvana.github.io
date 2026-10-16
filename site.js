@@ -190,11 +190,13 @@
     fill("popular", popular);
     if (refreshTabs) refreshTabs();
     var badge = document.getElementById("live-new"), play = document.getElementById("play-newest");
-    if (newest.length && badge) {
-      badge.href = "https://youtu.be/" + encodeURIComponent(newest[0].id);
-      badge.querySelector("span").textContent = "New: " + newest[0].title;
+    if (newest.length && badge) {                     // the caption (plain text) and the one button that plays it
+      badge.setAttribute("data-published", newest[0].published || "");
+      badge.querySelector(".ttl").textContent = newest[0].title;
+      newLabel();
       badge.hidden = false;
-      if (play) { play.href = badge.href; play.textContent = "\u25b6\u00a0 Play the newest video"; }
+      if (play) { play.href = "https://youtu.be/" + encodeURIComponent(newest[0].id);
+                  play.textContent = "\u25b6\u00a0 Play the newest video"; }
     }
     Object.keys(d.members).forEach(function (c) {
       var tile = document.querySelector('.mood[data-cat="' + c + '"]');
@@ -220,6 +222,14 @@
 
   week(Date.now());
   window.__snWeek = week;                             // (for tests: run the week strip at a chosen moment)
+  // "New this week:" only while the newest video is under 7 days old (checked on the visitor's own clock)
+  function newLabel() {
+    var b = document.getElementById("live-new");
+    if (!b) return;
+    var t = Date.parse(b.getAttribute("data-published") || ""), age = Date.now() - t;
+    b.querySelector(".lbl").textContent = (!isNaN(t) && age >= 0 && age < 7 * 864e5) ? "New this week:" : "Latest:";
+  }
+  newLabel();
   var refreshTabs = tabs();
   if (!cfg.key) return;
   var ck = "sn-live-1:" + (cfg.uploads || "") + ":" + Object.keys(cfg.playlists || {}).map(function (c) { return cfg.playlists[c]; }).join(",");
