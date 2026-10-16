@@ -14,9 +14,23 @@ header.over{position:absolute;top:0;left:0;right:0;z-index:5}
 nav a{color:var(--moon);opacity:.8;text-decoration:none;margin-left:22px;font-size:15px}nav a:hover{opacity:1;color:var(--moon)}
 .hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden;
 background:radial-gradient(ellipse at 70% 20%,#3A2D6B 0%,#1A1E40 45%,var(--night) 80%)}
-.hero .scene{position:absolute;inset:-3%;background-size:cover;background-position:center}
-@media (min-width:700px) and (prefers-reduced-motion:no-preference){.hero .scene{animation:drift 60s ease-in-out infinite alternate}}
-@keyframes drift{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.08) translate(-1.5%,-1%)}}
+.hero .scene{position:absolute;inset:-4%;background-size:cover;background-position:center}
+.hero .scene.sky{--moon:74% 24%;background:radial-gradient(circle at var(--moon),#FFF8E6 0 26px,rgba(255,236,200,.35) 30px,rgba(168,151,224,.12) 120px,transparent 240px),
+radial-gradient(ellipse 90% 40% at 50% 100%,rgba(120,96,200,.35),transparent 70%),
+linear-gradient(180deg,#1B1640 0%,#2A2160 45%,#3B2C72 75%,#22204A 100%)}
+.hero .scene.sky::before,.hero .scene.sky::after{content:"";position:absolute;inset:0;background-repeat:repeat}
+.hero .scene.sky::before{background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(1.6px 1.6px at 90px 120px,#fff,transparent),
+radial-gradient(2.2px 2.2px at 160px 60px,#fff,transparent),radial-gradient(1.6px 1.6px at 210px 170px,#F0EBFF,transparent),
+radial-gradient(2px 2px at 60px 200px,#fff,transparent);background-size:240px 230px;opacity:.8}
+.hero .scene.sky::after{background-image:radial-gradient(2.6px 2.6px at 50px 80px,#fff,transparent),radial-gradient(2.2px 2.2px at 250px 40px,#E8E2FF,transparent),
+radial-gradient(3px 3px at 170px 260px,#fff,transparent),radial-gradient(2.2px 2.2px at 330px 190px,#fff,transparent);background-size:380px 330px;opacity:.6}
+@media (prefers-reduced-motion:no-preference){
+.hero .scene.photo{animation:drift 40s ease-in-out infinite alternate}
+.hero .scene.sky::before{animation:twinkle 5s ease-in-out infinite alternate}
+.hero .scene.sky::after{animation:twinkle 7s ease-in-out infinite alternate-reverse,float 90s linear infinite}}
+@keyframes drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.1) translate(-2.5%,-1.5%)}}
+@keyframes twinkle{from{opacity:.15}to{opacity:1}}
+@keyframes float{from{background-position:0 0}to{background-position:-380px 60px}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,20,42,.55) 0%,rgba(16,20,42,.05) 35%,rgba(16,20,42,.55) 70%,var(--night) 100%)}
 .hero .wrap{position:relative;z-index:2;padding-bottom:64px;padding-top:120px;width:100%}
 .hero h1{font-weight:500;font-size:clamp(42px,7vw,76px);line-height:1.05;margin:0 0 10px;letter-spacing:-.01em}
@@ -84,4 +98,4 @@ footer a{color:var(--sub);margin-right:18px}
 .mood{flex-direction:row}.mood .pic{width:38%;aspect-ratio:auto;min-height:150px}.mood .pic::after{display:none}
 .mood .body{padding:14px 16px}.mood b{font-size:19px}.mood p{font-size:13.5px;margin:4px 0 10px}
 .mood .when{flex-direction:column;align-items:flex-start;gap:4px}.vgrid{grid-template-columns:1fr}.lead{font-size:16px}
-section{padding:48px 0}.tag{letter-spacing:.2em;font-size:11.5px}.live{font-size:12px}}
+section{padding:48px 0}.tag{letter-spacing:.2em;font-size:11.5px}.live{font-size:12px}.hero .scene.sky{--moon:80% 15%}}
