@@ -7,7 +7,7 @@
 <meta name="p:domain_verify" content="37c205f9071a3b2992ee789ceb960bda"/>
 </head><body>
 <header><div class="wrap"><a class="brand" href="index.html"><img src="logo.png" alt="">serene nirvana</a>
-<nav><a href="index.html">Home</a><a href="index.html#find-us">Find us</a><a href="support.html">Support</a><a href="https://www.youtube.com/@serene_nirvana">YouTube</a></nav></div></header>
+<nav><a href="index.html">Home</a><a href="index.html#find-us">Find us</a><a href="support.html">Support</a><a class="yt" href="https://www.youtube.com/@serene_nirvana" rel="noopener">YouTube ↗</a></nav></div></header>
 
 <main class="wrap doc"><h1>Serene Nirvana Bot — API client overview</h1>
 <p class="muted">Private uploader for the YouTube channel @serene_nirvana.</p>
@@ -16,10 +16,13 @@
 It has exactly one user, the channel owner, and is not offered to anyone else.</p>
 <h3>How it uses YouTube API Services</h3><ul>
 <li><b>Upload &amp; schedule:</b> videos.insert (private with publishAt), thumbnails.set</li>
-<li><b>Organise the channel:</b> playlists.list, playlists.insert, playlistItems.insert</li>
+<li><b>Organise the channel:</b> playlists.list, playlists.insert, playlists.update, playlists.delete (only playlists the
+tool created), playlistItems.insert, playlistItems.delete, and channels.update (the upload-schedule section of the
+channel description)</li>
 <li><b>Avoid double-booking:</b> channels.list (mine), playlistItems.list (own uploads), videos.list (status)</li>
-<li><b>Website:</b> videos.list (titles and public view counts of the channel's own public videos) for the
-"Newest videos" and "Most popular" lists on this website</li>
+<li><b>Website:</b> videos.list and playlistItems.list (titles, lengths and public view counts of the channel's own public
+videos and playlists) for the "Newest videos" and "Most popular" lists and the playlist tiles on this website; visitors'
+browsers may also read the same public data with a website-restricted API key (no sign-in, read-only)</li>
 <li><b>Learn what viewers like:</b> YouTube Analytics reports.query on the owner's channel (views, minutes watched)</li>
 <li><b>Scopes:</b> youtube.upload, youtube, yt-analytics.readonly · <b>Volume:</b> about 3 videos + 6 Shorts per week</li></ul>
 <h3>Data handling</h3><p>The sign-in token is stored only on the owner's PC; the tool keeps only IDs of videos and playlists it created on the
@@ -27,5 +30,5 @@ owner's channel; analytics are used at fetch time and raw analytics are not stor
 or used to train AI models. See the <a href="privacy.html">privacy policy</a> and <a href="terms.html">terms</a>.</p>
 <h3>Content</h3><p>Original illustrated scenes with music composed for the channel.</p></main>
 <footer><div class="wrap"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms</a><a href="support.html">Support</a><a href="api-overview.html">About our uploader</a>
-<p>© 2026 Serene Nirvana. Made for calm, focus and sleep.</p></div></footer>
+<p>© 2026 Serene Nirvana. Made for calm, focus and sleep. No cookies, no tracking.</p></div></footer>
 </body></html>
