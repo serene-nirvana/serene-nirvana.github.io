@@ -73,9 +73,10 @@ justify-content:space-between;align-items:center;gap:8px}
 .week{position:relative;display:grid;grid-template-columns:repeat(var(--n,5),1fr);gap:10px}
 .day{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 12px;min-height:110px}
 .day .d{font-size:13px;color:var(--sub);text-transform:uppercase;letter-spacing:.12em}
-.day .t{font-weight:500;margin-top:6px;font-size:16px}.day .k{font-size:13px;margin-top:2px}
+.day .t{font-weight:500;margin-top:6px;font-size:16px}
+.day .k{font-size:13px;margin-top:2px;display:flex;align-items:center;white-space:nowrap}
 .day.off{opacity:.55}.day.today{border-color:var(--moon);opacity:1}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.dot{display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
 .next{margin:18px 0 0;color:var(--sub);font-size:15px}.next b{color:var(--moon);font-weight:500}
 .tabs{display:flex;gap:22px;margin-bottom:22px;border-bottom:1px solid var(--line)}
 .tabs button{font:inherit;font-size:16px;background:none;border:0;border-bottom:2px solid transparent;color:var(--sub);padding:0 0 10px;cursor:pointer;margin-bottom:-1px}
@@ -98,7 +99,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--sub);fon
 footer a{color:var(--sub);margin-right:18px}
 .doc{max-width:860px}.doc h1{font-weight:500;font-size:40px;margin:40px 0 4px}.doc p,.doc li{color:#D9D7E6}
 @media (max-width:900px){.moods{grid-template-columns:1fr 1fr}.vgrid{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr}
-.week{grid-template-columns:repeat(var(--n,5),minmax(108px,1fr));overflow-x:auto;padding-bottom:6px}}
+.week{grid-template-columns:repeat(var(--n,5),minmax(124px,1fr));overflow-x:auto;padding-bottom:6px}}
 @media (max-width:560px){nav a:not(.yt){display:none}.hero{min-height:78vh}.moods{grid-template-columns:1fr}
 .mood{flex-direction:row}.mood .pic{width:38%;aspect-ratio:auto;min-height:150px}.mood .pic::after{display:none}
 .mood .body{padding:14px 16px}.mood b{font-size:19px}.mood p{font-size:13.5px;margin:4px 0 10px}
