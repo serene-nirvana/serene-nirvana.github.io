@@ -201,7 +201,7 @@
       newLabel();
       badge.hidden = false;
       if (play) { play.href = "https://youtu.be/" + encodeURIComponent(newest[0].id);
-                  play.textContent = "\u25b6\u00a0 Play the newest video"; }
+                  play.textContent = "\u25b6\u00a0 Play the latest video"; }
     }
     Object.keys(d.members).forEach(function (c) {
       var tile = document.querySelector('.mood[data-cat="' + c + '"]');
