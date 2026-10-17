@@ -191,6 +191,11 @@
     if (refreshTabs) refreshTabs();
     var badge = document.getElementById("live-new"), play = document.getElementById("play-newest");
     if (newest.length && badge) {                     // the caption (plain text) and the one button that plays it
+      var cat = "";                                   // its dot: the colour of the playlist it's in
+      Object.keys(d.members).forEach(function (c) { if (!cat && d.members[c].indexOf(newest[0].id) >= 0) cat = c; });
+      if (!cat && badge.getAttribute("data-id") === newest[0].id) cat = badge.getAttribute("data-cat") || "";
+      badge.setAttribute("data-cat", /^(sleep|focus|meditation|morning)$/.test(cat) ? cat : "");
+      badge.setAttribute("data-id", newest[0].id);
       badge.setAttribute("data-published", newest[0].published || "");
       badge.querySelector(".ttl").textContent = newest[0].title;
       newLabel();

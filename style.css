@@ -40,10 +40,12 @@ text-shadow:0 2px 24px rgba(10,12,30,.45)}
 .tag{letter-spacing:.32em;font-size:13px;text-transform:uppercase;color:var(--sub)}
 .lead{max-width:600px;margin:18px auto 22px;color:#D9D7E6;font-size:18px}
 .hero .live{margin:0 auto 18px}.hero .btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.hero .btn{margin:0}
-.live{display:block;font-size:13px;line-height:1.5;color:var(--sub);margin:0 0 18px;max-width:600px;background:none;border:0;
-padding:0;text-shadow:0 1px 8px rgba(8,10,24,.9),0 0 2px rgba(8,10,24,.7);cursor:default}
-.live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sage);margin-right:8px;vertical-align:1px;
-box-shadow:0 0 0 4px rgba(159,207,166,.18)}
+.live{--c:var(--moon);display:block;font-size:15px;line-height:1.5;color:#C9CCDD;margin:0 0 18px;max-width:600px;background:none;
+border:0;padding:0;text-shadow:0 1px 8px rgba(8,10,24,.9),0 0 2px rgba(8,10,24,.7);cursor:default}
+.live i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:9px;vertical-align:1px;
+box-shadow:0 0 10px var(--c)}           /* the colour of the newest video's playlist (as on its tile below) */
+.live[data-cat=sleep]{--c:var(--lav)}.live[data-cat=focus]{--c:var(--sky)}.live[data-cat=meditation]{--c:var(--sage)}
+.live[data-cat=morning]{--c:var(--gold)}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;text-decoration:none;font-weight:500;
 background:var(--moon);color:var(--night);margin:0 10px 10px 0;font-size:16px}
 .btn.alt{background:rgba(238,234,246,.08);color:var(--moon);border:1px solid rgba(238,234,246,.35)}
@@ -105,4 +107,4 @@ footer a{color:var(--sub);margin-right:18px}
 .mood{flex-direction:row}.mood .pic{width:38%;aspect-ratio:auto;min-height:150px}.mood .pic::after{display:none}
 .mood .body{padding:14px 16px}.mood b{font-size:19px}.mood p{font-size:13.5px;margin:4px 0 10px}
 .mood .when{flex-direction:column;align-items:flex-start;gap:4px}.vgrid{grid-template-columns:1fr}.lead{font-size:16px}
-section{padding:32px 0}.home > section:first-child{padding-top:24px}.tag{letter-spacing:.2em;font-size:11.5px}.live{font-size:12px}.hero .scene.sky{--moon:80% 15%}}
+section{padding:32px 0}.home > section:first-child{padding-top:24px}.tag{letter-spacing:.2em;font-size:11.5px}.live{font-size:14px}.hero .scene.sky{--moon:80% 15%}}
