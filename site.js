@@ -202,6 +202,7 @@
       badge.hidden = false;
       if (play) { play.href = "https://youtu.be/" + encodeURIComponent(newest[0].id);
                   play.textContent = "\u25b6\u00a0 Play the latest video"; }
+      hero(newest[0].title);
     }
     Object.keys(d.members).forEach(function (c) {
       var tile = document.querySelector('.mood[data-cat="' + c + '"]');
@@ -222,6 +223,16 @@
       badgeEl.textContent = inside.length + " video" + (inside.length === 1 ? "" : "s");
       playEl.textContent = "▶ Play all";
     });
+  }
+  // the header: when the newest public video is one the site was told about in advance (made but not out yet when the
+  // site was built), show that video's scene - matched by its title, so it only changes once the video is really out
+  function norm(t) { return String(t || "").toLowerCase().replace(/\s+/g, " ").trim(); }
+  function hero(title) {
+    var k = norm(title), hs = cfg.heroes || [], sc = document.querySelector(".hero .scene");
+    if (!sc || !k) return;
+    for (var i = 0; i < hs.length; i++) {
+      if (norm(hs[i].t) === k) { sc.className = "scene photo"; sc.style.backgroundImage = "url(" + hs[i].img + ")"; return; }
+    }
   }
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
 
