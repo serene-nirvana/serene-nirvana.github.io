@@ -1,7 +1,9 @@
 /* Serene Nirvana website: small, private helpers that run in the visitor's browser.
    - "This week": highlights today and says what's next (the channel's time zone, and the visitor's own time).
    - Live lists (only when the site has a YouTube API key): the playlist tiles, Newest and Most popular are read from
-     YouTube's public data, so they match the channel right now. The list is kept in this browser for a few hours.
+     YouTube's public data, so they match the channel right now. The list is kept in this browser for a few hours,
+     but read again after each posting time. A new video the bot hasn't added to its playlist yet already gets its
+     playlist's colour and place, from the categories the site was told in advance (matched by title).
      If YouTube can't be reached, the lists built into the page stay as they are.
    No cookies, no tracking: nothing about the visitor is stored anywhere but their own browser. */
 (function () {
@@ -190,9 +192,16 @@
     fill("popular", popular);
     if (refreshTabs) refreshTabs();
     var badge = document.getElementById("live-new"), play = document.getElementById("play-newest");
+    var early = {};                                   // public videos not in a playlist yet, whose category the site was
+    Object.keys(d.vids).forEach(function (id) {       // told in advance (by title): counted in their playlist straight away
+      var inAny = Object.keys(d.members).some(function (c) { return d.members[c].indexOf(id) >= 0; });
+      var c = inAny ? "" : upcomingCat(d.vids[id].title);
+      if (c) (early[c] = early[c] || []).push(id);
+    });
     if (newest.length && badge) {                     // the caption (plain text) and the one button that plays it
       var cat = "";                                   // its dot: the colour of the playlist it's in
       Object.keys(d.members).forEach(function (c) { if (!cat && d.members[c].indexOf(newest[0].id) >= 0) cat = c; });
+      if (!cat) cat = upcomingCat(newest[0].title);   // …or will be in (the bot adds it on its next run)
       if (!cat && badge.getAttribute("data-id") === newest[0].id) cat = badge.getAttribute("data-cat") || "";
       badge.setAttribute("data-cat", /^(sleep|focus|meditation|morning)$/.test(cat) ? cat : "");
       badge.setAttribute("data-id", newest[0].id);
@@ -207,7 +216,8 @@
     Object.keys(d.members).forEach(function (c) {
       var tile = document.querySelector('.mood[data-cat="' + c + '"]');
       if (!tile) return;
-      var inside = d.members[c].filter(function (v) { return d.vids[v]; }).map(function (v) { return d.vids[v]; }).sort(byNew);
+      var inside = d.members[c].concat(early[c] || []).filter(function (v) { return d.vids[v]; })
+        .map(function (v) { return d.vids[v]; }).sort(byNew);
       var pic = tile.querySelector(".pic"), badgeEl = tile.querySelector(".count"), playEl = tile.querySelector(".play");
       if (!inside.length) return;                       // (keep what the page was built with)
       var link = tile;
@@ -227,6 +237,27 @@
   // the header: when the newest public video is one the site was told about in advance (made but not out yet when the
   // site was built), show that video's scene - matched by its title, so it only changes once the video is really out
   function norm(t) { return String(t || "").toLowerCase().replace(/\s+/g, " ").trim(); }
+  function upcomingCat(title) {                     // the category of a video the site was told about in advance
+    var k = norm(title), us = cfg.upcoming || [];
+    for (var i = 0; i < us.length; i++) {
+      if (norm(us[i].t) === k && /^(sleep|focus|meditation|morning)$/.test(us[i].cat)) return us[i].cat;
+    }
+    return "";
+  }
+  // the most recent posting time (the channel's own clock) at or before t, or 0
+  function lastRelease(t) {
+    var tz = cfg.tz || "America/New_York", p = partsIn(tz, t), slots = cfg.slots || [], best = 0;
+    for (var k = 0; k < 8; k++) {
+      var base = new Date(Date.UTC(p.y, p.mo - 1, p.d - k)), day = DAYS[(p.wd - k + 70) % 7];
+      for (var j = 0; j < slots.length; j++) {
+        var s = slots[j], hm = String(s.hm || "").split(":");
+        if (s.day !== day || hm.length !== 2) continue;
+        var at = zonedToUtc(base.getUTCFullYear(), base.getUTCMonth() + 1, base.getUTCDate(), +hm[0], +hm[1], tz);
+        if (at <= t && at > best) best = at;
+      }
+    }
+    return best;
+  }
   function hero(title) {
     var k = norm(title), hs = cfg.heroes || [], sc = document.querySelector(".hero .scene");
     if (!sc || !k) return;
@@ -250,7 +281,9 @@
   if (!cfg.key) return;
   var ck = "sn-live-1:" + (cfg.uploads || "") + ":" + Object.keys(cfg.playlists || {}).map(function (c) { return cfg.playlists[c]; }).join(",");
   var cached = store(ck);
-  if (cached && cached.d && Date.now() - cached.t < (cfg.ttl || 10800) * 1000) { render(cached.d, refreshTabs); return; }
+  var rel = lastRelease(Date.now());                // read before a posting time (or just after it, while YouTube may not
+  var before = rel && cached && cached.t < rel + (cfg.settle || 900) * 1000;   // show it yet): read again now
+  if (cached && cached.d && !before && Date.now() - cached.t < (cfg.ttl || 10800) * 1000) { render(cached.d, refreshTabs); return; }
   if (cached && cached.d) render(cached.d, refreshTabs);
   load().then(function (d) {
     store(ck, { t: Date.now(), d: d });
