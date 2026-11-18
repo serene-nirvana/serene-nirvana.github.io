@@ -24,7 +24,14 @@ channel description)</li>
 videos and playlists) for the "Newest videos" and "Most popular" lists and the playlist tiles on this website; visitors'
 browsers may also read the same public data with a website-restricted API key (no sign-in, read-only)</li>
 <li><b>Learn what viewers like:</b> YouTube Analytics reports.query on the owner's channel (views, minutes watched)</li>
-<li><b>Scopes:</b> youtube.upload, youtube, yt-analytics.readonly · <b>Volume:</b> about 3 videos + 6 Shorts per week</li></ul>
+<li><b>Video settings:</b> videos.update (titles and descriptions in other languages - localizations; a video set to
+private when the owner asks), videos.delete (only the tool's own test uploads)</li>
+<li><b>Live streams of the channel's own videos:</b> liveBroadcasts.insert, liveBroadcasts.bind, liveBroadcasts.transition,
+liveBroadcasts.list, liveStreams.insert, liveStreams.list</li>
+<li><b>Comments (optional, when the owner switches them on):</b> commentThreads.insert (one comment by the channel on each
+of its own new videos), commentThreads.list (new comments on the channel's own videos, for the owner's weekly email)</li>
+<li><b>Scopes:</b> youtube.upload, youtube, yt-analytics.readonly; youtube.force-ssl only when the owner switches comments on ·
+<b>Volume:</b> about 5 videos + 10 Shorts per week</li></ul>
 <h3>Data handling</h3><p>The sign-in token is stored only on the owner's PC; the tool keeps only IDs of videos and playlists it created on the
 owner's channel; analytics are used at fetch time and raw analytics are not stored. No API data is sold, shared, used for advertising
 or used to train AI models. See the <a href="privacy.html">privacy policy</a> and <a href="terms.html">terms</a>.</p>
