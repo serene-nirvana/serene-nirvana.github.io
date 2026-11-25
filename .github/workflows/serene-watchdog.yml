@@ -1,0 +1,34 @@
+# Serene Nirvana bot watchdog - added by the bot (build 2026.11.14; README → the watchdog).
+# Once a day: has the bot's PC checked in by the time it said it would? If not, this run fails and GitHub emails you.
+# It reads one repository variable the bot keeps current and prints nothing about it.
+name: Serene Nirvana watchdog
+on:
+  schedule:
+    - cron: "37 14 * * *"
+  workflow_dispatch:
+permissions: {}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Has the bot's PC checked in on time?
+        env:
+          NEXT_BY: ${{ vars.SN_NEXT_CHECK_IN_BY }}
+        run: |
+          python3 - <<'PYEOF'
+          import datetime as dt, os, sys
+          v = os.environ.get("NEXT_BY", "").strip()
+          if not v:
+              print("The bot hasn't set its check-in time yet - nothing to check.")
+              sys.exit(0)
+          try:
+              due = dt.datetime.fromisoformat(v.replace("Z", "+00:00"))
+          except ValueError:
+              print("The check-in time isn't readable - nothing to check.")
+              sys.exit(0)
+          if dt.datetime.now(dt.timezone.utc) > due:
+              print("::error::The Serene Nirvana bot's PC didn't check in when it said it would. It may be off, "
+                    "asleep, offline or stuck - have a look at it (or ask someone at home to).")
+              sys.exit(1)
+          print("On time.")
+          PYEOF
