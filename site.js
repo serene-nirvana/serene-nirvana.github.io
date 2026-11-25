@@ -262,13 +262,19 @@
     var k = norm(title), hs = cfg.heroes || [], sc = document.querySelector(".hero .scene");
     if (!sc || !k) return;
     for (var i = 0; i < hs.length; i++) {
-      if (norm(hs[i].t) === k) { sc.className = "scene photo"; sc.style.backgroundImage = "url(" + hs[i].img + ")"; return; }
+      if (norm(hs[i].t) === k) {
+        sc.className = "scene photo"; sc.style.backgroundImage = "url(" + hs[i].img + ")";
+        var gl = document.querySelector(".hero .glass");  // (build 2026.11.27: the panel only as dark as this picture needs)
+        if (gl && typeof hs[i].a === "number") gl.style.setProperty("--ga", String(hs[i].a));
+        return;
+      }
     }
   }
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
 
   week(Date.now());
   window.__snWeek = week;                             // (for tests: run the week strip at a chosen moment)
+  window.__snHero = hero;                             // (for tests: a scheduled video's header picture going public)
   // "New this week:" only while the newest video is under 7 days old (checked on the visitor's own clock)
   function newLabel() {
     var b = document.getElementById("live-new");
